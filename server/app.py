@@ -44,6 +44,27 @@ def bad_request(_error):
     return jsonify({"error": "Bad request"}), 400
 
 
+# ---------- index ----------
+
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        "message": "Workout Tracker API",
+        "endpoints": {
+            "GET /workouts": "List all workouts",
+            "GET /workouts/<id>": "Show a workout with its exercises",
+            "POST /workouts": "Create a workout",
+            "DELETE /workouts/<id>": "Delete a workout",
+            "GET /exercises": "List all exercises",
+            "GET /exercises/<id>": "Show an exercise with its workouts",
+            "POST /exercises": "Create an exercise",
+            "DELETE /exercises/<id>": "Delete an exercise",
+            "POST /workouts/<workout_id>/exercises/<exercise_id>/workout_exercises":
+                "Add an exercise to a workout",
+        },
+    }), 200
+
+
 # ---------- Workout routes ----------
 
 @app.route('/workouts', methods=['GET'])
