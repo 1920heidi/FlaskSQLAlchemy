@@ -4,30 +4,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Workout Log</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
 
-<div class="grain"></div>
-
 <header class="site-header">
   <div class="header-inner">
-    <div class="brand">
-      <span class="brand-mark">WL</span>
-      <div class="brand-text">
-        <h1>WORKOUT LOG</h1>
-        <p class="tagline">TRAINER&rsquo;S LOGBOOK &mdash; TRACK EVERY REP</p>
-      </div>
-    </div>
+    <h1>Workout Log</h1>
     <nav class="tabs" role="tablist">
       <button class="tab-btn is-active" data-tab="workouts" role="tab" aria-selected="true">Workouts</button>
       <button class="tab-btn" data-tab="exercises" role="tab" aria-selected="false">Exercises</button>
     </nav>
   </div>
-  <div class="hazard-bar" aria-hidden="true"></div>
 </header>
 
 <main class="app-main">
@@ -67,7 +55,7 @@
 
     <div id="workouts-list" class="card-list"></div>
     <p id="workouts-empty" class="empty-state" hidden>
-      NO WORKOUTS LOGGED YET.<br />HIT THE FLOOR AND LOG YOUR FIRST SESSION.
+      No workouts yet. Create one to get started.
     </p>
   </section>
 
@@ -113,7 +101,7 @@
 
     <div id="exercises-list" class="card-list"></div>
     <p id="exercises-empty" class="empty-state" hidden>
-      NO EXERCISES YET.<br />BUILD YOUR LIBRARY TO START PROGRAMMING WORKOUTS.
+      No exercises yet. Add one to get started.
     </p>
   </section>
 
