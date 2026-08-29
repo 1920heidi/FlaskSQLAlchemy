@@ -1,0 +1,56 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Flask
+instance/
+.webassets-cache
+
+# SQLite database
+*.db
+*.sqlite3
+
+# Flask-Migrate
+# (migrations/ is kept in version control)
+
+# IDE
+.vscode/
+.idea/
+
+# ipdb / debugging
+.ipdb_history
+
+# macOS
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
