@@ -83,6 +83,15 @@ The API runs at `http://localhost:5555`.
 
 All error responses are returned as JSON, e.g. `{ "error": "Workout not found" }` (404) or `{ "errors": {...} }` (400 validation errors).
 
+## Tests
+
+A pytest suite covers model validations, table constraints, relationships/cascades, and every endpoint (success and error paths). Each test runs against a fresh in-memory SQLite database.
+
+```bash
+cd server
+pytest
+```
+
 ## Project structure
 
 ```
@@ -96,5 +105,7 @@ ass2/
     ├── models.py        # SQLAlchemy models, table constraints, model validations
     ├── schemas.py        # Marshmallow schemas, schema validations
     ├── seed.py          # Seed script
+    ├── conftest.py       # Pytest fixtures (in-memory test database)
+    ├── tests/           # Pytest suite
     └── migrations/        # Flask-Migrate migration history
 ```
