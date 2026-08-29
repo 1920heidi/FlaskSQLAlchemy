@@ -62,7 +62,13 @@ def index():
             "POST /workouts/<workout_id>/exercises/<exercise_id>/workout_exercises":
                 "Add an exercise to a workout",
         },
+        "ui": "/app",
     }), 200
+
+
+@app.route('/app', methods=['GET'])
+def frontend():
+    return app.send_static_file('index.html')
 
 
 # ---------- Workout routes ----------

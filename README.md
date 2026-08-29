@@ -65,7 +65,7 @@ cd server
 python app.py
 ```
 
-The API runs at `http://localhost:5555`.
+The API runs at `http://localhost:5555`. A browsable web UI is served at `http://localhost:5555/app` (see [Frontend](#frontend) below).
 
 ## Endpoints
 
@@ -82,6 +82,12 @@ The API runs at `http://localhost:5555`.
 | POST | `/workouts/<workout_id>/exercises/<exercise_id>/workout_exercises` | Add an exercise to a workout. Body: `{ "reps": int, "sets": int }` and/or `{ "duration_seconds": int }` |
 
 All error responses are returned as JSON, e.g. `{ "error": "Workout not found" }` (404) or `{ "errors": {...} }` (400 validation errors).
+
+## Frontend
+
+A single-page vanilla HTML/CSS/JS UI is served by Flask itself at `/app` (same origin as the API, so no CORS setup is needed). It lets you browse workouts and exercises, log a new workout, add an exercise to your library, expand a workout to add exercises with reps/sets or duration, and delete workouts/exercises. It talks to the same REST endpoints listed above — there's no separate backend for it.
+
+Source: `server/static/index.html`, `server/static/css/style.css`, `server/static/js/app.js`.
 
 ## Tests
 
@@ -107,5 +113,6 @@ ass2/
     ├── seed.py          # Seed script
     ├── conftest.py       # Pytest fixtures (in-memory test database)
     ├── tests/           # Pytest suite
+    ├── static/          # Frontend (index.html, css/, js/), served at /app
     └── migrations/        # Flask-Migrate migration history
 ```

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workout Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <span class="brand-mark">WL</span>
+      <div class="brand-text">
+        <h1>WORKOUT LOG</h1>
+        <p class="tagline">TRAINER&rsquo;S LOGBOOK &mdash; TRACK EVERY REP</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn is-active" data-tab="workouts" role="tab" aria-selected="true">Workouts</button>
+      <button class="tab-btn" data-tab="exercises" role="tab" aria-selected="false">Exercises</button>
+    </nav>
+  </div>
+  <div class="hazard-bar" aria-hidden="true"></div>
+</header>
+
+<main class="app-main">
+
+  <!-- WORKOUTS VIEW -->
+  <section id="view-workouts" class="view is-active">
+    <div class="view-toolbar">
+      <div>
+        <h2 class="view-title">Workouts</h2>
+        <p class="view-count"><span id="workout-count">0</span> logged</p>
+      </div>
+      <button class="btn btn-accent" id="toggle-workout-form">
+        <span class="plus">+</span> New Workout
+      </button>
+    </div>
+
+    <form id="workout-form" class="entry-form" hidden>
+      <div class="form-grid">
+        <label class="field">
+          <span class="field-label">Date</span>
+          <input type="date" name="date" required />
+        </label>
+        <label class="field">
+          <span class="field-label">Duration (minutes)</span>
+          <input type="number" name="duration_minutes" min="1" max="600" placeholder="45" required />
+        </label>
+        <label class="field field-wide">
+          <span class="field-label">Notes</span>
+          <textarea name="notes" rows="2" placeholder="Focus on form over speed..."></textarea>
+        </label>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" data-cancel="workout-form">Cancel</button>
+        <button type="submit" class="btn btn-accent">Log Workout</button>
+      </div>
+    </form>
+
+    <div id="workouts-list" class="card-list"></div>
+    <p id="workouts-empty" class="empty-state" hidden>
+      NO WORKOUTS LOGGED YET.<br />HIT THE FLOOR AND LOG YOUR FIRST SESSION.
+    </p>
+  </section>
+
+  <!-- EXERCISES VIEW -->
+  <section id="view-exercises" class="view">
+    <div class="view-toolbar">
+      <div>
+        <h2 class="view-title">Exercise Library</h2>
+        <p class="view-count"><span id="exercise-count">0</span> exercises</p>
+      </div>
+      <button class="btn btn-accent" id="toggle-exercise-form">
+        <span class="plus">+</span> New Exercise
+      </button>
+    </div>
+
+    <form id="exercise-form" class="entry-form" hidden>
+      <div class="form-grid">
+        <label class="field">
+          <span class="field-label">Name</span>
+          <input type="text" name="name" placeholder="Bulgarian Split Squat" required />
+        </label>
+        <label class="field">
+          <span class="field-label">Category</span>
+          <select name="category" required>
+            <option value="">Select&hellip;</option>
+            <option value="strength">Strength</option>
+            <option value="cardio">Cardio</option>
+            <option value="flexibility">Flexibility</option>
+            <option value="balance">Balance</option>
+          </select>
+        </label>
+        <label class="field checkbox-field">
+          <input type="checkbox" name="equipment_needed" />
+          <span class="checkbox-box" aria-hidden="true"></span>
+          <span class="field-label">Requires equipment</span>
+        </label>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" data-cancel="exercise-form">Cancel</button>
+        <button type="submit" class="btn btn-accent">Add Exercise</button>
+      </div>
+    </form>
+
+    <div id="exercises-list" class="card-list"></div>
+    <p id="exercises-empty" class="empty-state" hidden>
+      NO EXERCISES YET.<br />BUILD YOUR LIBRARY TO START PROGRAMMING WORKOUTS.
+    </p>
+  </section>
+
+</main>
+
+<div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+
+<template id="tpl-workout-card">
+  <article class="card workout-card">
+    <button class="card-header" type="button">
+      <div class="card-date">
+        <span class="date-day"></span>
+        <span class="date-month"></span>
+      </div>
+      <div class="card-summary">
+        <p class="card-meta"><span class="duration-badge"></span> <span class="exercise-count-badge"></span></p>
+        <p class="card-notes"></p>
+      </div>
+      <span class="chevron" aria-hidden="true">&rsaquo;</span>
+    </button>
+    <div class="card-detail" hidden>
+      <ul class="exercise-entries"></ul>
+      <p class="detail-empty" hidden>No exercises logged for this workout yet.</p>
+
+      <div class="add-exercise-block">
+        <p class="block-label">Add Exercise</p>
+        <form class="add-exercise-form">
+          <select name="exercise_id" required>
+            <option value="">Choose exercise&hellip;</option>
+          </select>
+          <div class="metric-toggle">
+            <button type="button" class="metric-btn is-active" data-metric="reps">Reps &amp; Sets</button>
+            <button type="button" class="metric-btn" data-metric="duration">Duration</button>
+          </div>
+          <div class="metric-fields" data-metric-fields="reps">
+            <input type="number" name="sets" min="1" placeholder="Sets" />
+            <input type="number" name="reps" min="1" placeholder="Reps" />
+          </div>
+          <div class="metric-fields" data-metric-fields="duration" hidden>
+            <input type="number" name="duration_seconds" min="1" placeholder="Seconds" />
+          </div>
+          <button type="submit" class="btn btn-small btn-accent">Add</button>
+        </form>
+      </div>
+
+      <button type="button" class="btn btn-danger btn-small delete-workout">Delete Workout</button>
+    </div>
+  </article>
+</template>
+
+<template id="tpl-workout-exercise-entry">
+  <li class="exercise-entry">
+    <span class="entry-category-dot"></span>
+    <span class="entry-name"></span>
+    <span class="entry-metric"></span>
+  </li>
+</template>
+
+<template id="tpl-exercise-card">
+  <article class="card exercise-card">
+    <button class="card-header" type="button">
+      <span class="entry-category-dot"></span>
+      <div class="card-summary">
+        <p class="exercise-name"></p>
+        <p class="card-meta"><span class="category-label"></span><span class="equipment-label"></span></p>
+      </div>
+      <span class="chevron" aria-hidden="true">&rsaquo;</span>
+    </button>
+    <div class="card-detail" hidden>
+      <p class="block-label">Used In</p>
+      <ul class="workout-usage-entries"></ul>
+      <p class="detail-empty" hidden>Not used in any workout yet.</p>
+      <button type="button" class="btn btn-danger btn-small delete-exercise">Delete Exercise</button>
+    </div>
+  </article>
+</template>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
